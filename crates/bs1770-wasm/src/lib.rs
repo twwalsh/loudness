@@ -25,9 +25,9 @@ impl Meter {
         self.inner.push_interleaved(samples);
     }
 
-    /// One channel's samples; call once per channel, in channel order, for each block of frames.
-    /// Simpler from JS: concatenate the AudioBuffer's channels into one Float32Array of `frames *
-    /// channels` samples and call [`push_planar_concat`].
+    /// Planar audio as one buffer: the `AudioBuffer`'s channels concatenated into a single
+    /// `Float32Array` of `frames * channels` samples, channel 0 first. That is one `copyFromChannel`
+    /// per channel in JS and no interleaving.
     pub fn push_planar_concat(&mut self, planes: &[f32], frames: usize) {
         let channels = self.inner.channels();
         if frames == 0 || planes.len() < frames * channels {
