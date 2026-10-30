@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets
+      - run: cargo test --workspace
+      - name: conformance against the EBU files, when the cached set is present
+        run: |
+          if [ -d testdata/ebu ]; then EBU_TEST_SET_DIR=testdata/ebu cargo test -p bs1770 --test ebu_files; else echo "no EBU set in CI; synthesised cases ran above"; fi
+      - run: cargo build -p bs1770-wasm --target wasm32-unknown-unknown --release
+      - name: wasm size
+        run: ls -la target/wasm32-unknown-unknown/release/*.wasm

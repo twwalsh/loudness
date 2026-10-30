@@ -1,0 +1,18 @@
+[package]
+name = "bs1770"
+description = "ITU-R BS.1770 loudness (momentary, short-term, integrated), EBU R 128 loudness range and true peak, with no dependencies"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords = ["audio", "loudness", "lufs", "ebu-r128", "true-peak"]
+categories = ["multimedia::audio"]
+
+[dependencies]
+
+[dev-dependencies]
+hound = "3.5"
+
+[lints]
+workspace = true

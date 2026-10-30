@@ -1,0 +1,5 @@
+/target
+/crates/bs1770-wasm/pkg
+/testdata/ebu
+*.wav
+!crates/bs1770/tests/fixtures/*.wav

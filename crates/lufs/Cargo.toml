@@ -1,0 +1,19 @@
+[package]
+name = "lufs"
+description = "Command-line loudness meter: integrated, range, momentary, short-term and true peak per BS.1770 / EBU R 128"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "lufs"
+path = "src/main.rs"
+
+[dependencies]
+bs1770 = { path = "../bs1770" }
+hound = "3.5"
+
+[lints]
+workspace = true
